@@ -24,24 +24,35 @@ function battery(){
 	batteryNum = parseInt(batteryNum);
 
 	if(batteryNum <= 0) {
-		document.getElementById('batteryNum').textContent = `0%`;
-		document.getElementById('clock').style.backgroundColor = "black"
+		document.getElementById('batteryNum').textContent = '0%';
 	} else {
 		batteryNum = batteryNum - 1;
 		document.getElementById('batteryNum').textContent = `${batteryNum}%`;
 	}
 
-	/*배터리가 충전되는 경우 고려해야함*/
-	if(batteryNum == 75){
+	if(batteryNum <= 75){
 		document.getElementById('1').style.visibility = 'hidden';
-	} else if(batteryNum == 50){
+	} 
+	if(batteryNum <= 50){
 		document.getElementById('2').style.visibility = 'hidden';
-	} else if(batteryNum == 25){
+	}
+	if(batteryNum <= 25){
 		document.getElementById('3').style.visibility = 'hidden';
-	} else if(batteryNum == 0){
+	}
+	if(batteryNum <= 0){
 		document.getElementById('4').style.visibility = 'hidden';
+		document.getElementById('clock').style.backgroundColor = "black"
 	}
 
+}
+
+function charge() {
+	document.getElementById('batteryNum').textContent = '100%';
+	document.getElementById('1').style.visibility = 'visible';
+	document.getElementById('2').style.visibility = 'visible';
+	document.getElementById('3').style.visibility = 'visible';
+	document.getElementById('4').style.visibility = 'visible';
+	document.getElementById('clock').style.backgroundColor = "yellow"
 }
 
 function addAlarm() {
@@ -51,10 +62,12 @@ function addAlarm() {
 	let str = `${hour}시 ${min}분 ${sec}초`
 
 	const element = document.getElementById('alarmBoard');
-	const newDiv = document.createElement('div');
-	const content = document.createTextNode(str);
-	element.appendChild(newDiv);
-	newDiv.appendChild(content);
+	if(element.childElementCount <= 3) {
+		const newDiv = document.createElement('div');
+		const content = document.createTextNode(str);
+		element.appendChild(newDiv);
+		newDiv.appendChild(content);
+	}
 }
 
 setInterval(clock, 1000);/*1000밀리초 = 1초*/
